@@ -30,6 +30,7 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          buildozer --verbose android debug
-        env:
-          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+          yes | buildozer android clean
+          yes | buildozer --verbose android debug
