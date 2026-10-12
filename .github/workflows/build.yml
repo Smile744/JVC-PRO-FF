@@ -1,5 +1,5 @@
 name: Compilar APK JVC-PRO FF
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -7,16 +7,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Instalar Dependencias del Sistema
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Instalar Dependencias
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev binfmt-support
+          sudo apt-get install -y git zip unzip python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev binfmt-support
 
-      - name: Configurar Python y Buildozer
+      - name: Instalar Buildozer
         run: |
           pip install --upgrade Cython==0.29.33 virtualenv buildozer
 
-      - name: Generar Archivo de Configuración de Buildozer
+      - name: Preparar Configuracion
         run: |
           buildozer init
           sed -i 's/^title = .*/title = JVC-PRO FF/' buildozer.spec
@@ -24,13 +30,12 @@ jobs:
           sed -i 's/^package.domain = .*/package.domain = org.jvc/' buildozer.spec
           sed -i 's/^requirements = .*/requirements = python3,kivy/' buildozer.spec
 
-      - name: Compilar APK con Buildozer
+      - name: Compilar APK
         run: |
           yes | buildozer -v android debug
 
-      - name: Subir APK Generado como Artefacto
+      - name: Subir APK
         uses: actions/upload-artifact@v3
         with:
           name: JVC-PRO-FF-APK
           path: bin/*.apk
-          
