@@ -30,7 +30,4 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
-          yes | buildozer android clean
-          yes | buildozer --verbose android debug
+          buildozer --verbose android debug --intent-to-accept-licenses
