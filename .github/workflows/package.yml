@@ -30,8 +30,12 @@ jobs:
 
       - name: Build with Buildozer
         run: |
+          # Forzamos a Buildozer a descargar el SDK base primero
+          buildozer android help || true
+          
+          # Inyectamos las licencias en la ruta que Buildozer ya creó
           mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          echo -e "\n247a1c6d50f8de50a7131974f1a545fc8bac4745" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo -e "\n27208515a26ee721da507e2133880a9293e42e1d" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo -e "\n35ab0213794b1509177114b7264a2b9f3906e579" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          echo -e "247a1c6d50f8de50a7131974f1a545fc8bac4745\n27208515a26ee721da507e2133880a9293e42e1d\n35ab0213794b1509177114b7264a2b9f3906e579" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          
+          # Compilamos la aplicación normalmente
           buildozer --verbose android debug
