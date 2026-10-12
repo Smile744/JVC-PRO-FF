@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup Java
-        uses: actions/setup-java@3f870313ef374a9d70fa7c8ff7e39405b76f273e
+        uses: actions/setup-java@387a412e430db80d22d7ef110ed11d86689d366a
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -38,7 +38,7 @@ jobs:
           yes | buildozer -v android debug
 
       - name: Upload APK
-        uses: actions/upload-artifact@0b7f1b6c321a07b16de2de114d915a271d54d19d
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf659b1a429527f9a66e
         with:
           name: JVC-PRO-FF-APK
           path: bin/*.apk
