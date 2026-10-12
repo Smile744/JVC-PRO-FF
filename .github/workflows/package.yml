@@ -30,4 +30,6 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          buildozer --verbose android debug --intent-to-accept-licenses
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          echo -e "247a1c6d50f8de50a7131974f1a545fc8bac4745\n27208515a26ee721da507e2133880a9293e42e1d\n35ab0213794b1509177114b7264a2b9f3906e579" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          buildozer --verbose android debug
